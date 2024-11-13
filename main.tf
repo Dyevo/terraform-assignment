@@ -188,3 +188,47 @@ resource "aws_instance" "Webserver02" {
         Name = "Webserver02"
     }
 }
+
+resource "aws_db_subnet_group" "mysql_subnet_grp" {
+    name = "mysql-subnet-grp"
+    subnet_ids = [aws_subnet.private01.id, aws_subnet.private02.id]
+    tags = {
+        Name = "mysql-subnet-grp"
+    }
+}
+
+resource "aws_security_group" "rds_sec_grp" {
+    name = "rds-sec-grp"
+    description = "Allow inbound MySQL traffic"
+    vpc_id = aws_vpc.main.id
+    ingress {
+        from_port = 3306
+        to_port = 3306
+        protocol = "tcp"
+        security_groups = [aws_security_group.web.id]
+    }
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+    tags = {
+        Name = "rds-sec-grp"
+    }
+}
+  
+resource "aws_db_instance" "mysql" {
+    allocated_storage = 10
+    engine = "mysql"
+    engine_version = "8.0.30"
+    instance_class = "db.t2.micro"
+    db_name = "mydb"
+    db_subnet_group_name = aws_db_subnet_group.mysql_subnet_grp.id
+    vpc_security_group_ids = [aws_security_group.rds_sec_grp.id]
+    skip_final_snapshot = true
+    publicly_accessible = false
+    tags = {
+        Name = "mysql-db"
+    }
+}
