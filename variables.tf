@@ -15,3 +15,13 @@ variable "key_pair" {
     type = string
     default = "IaCLabKP"
 }
+
+variable "instance1_name" {
+    description = "Webserver instance 1"
+    type = string
+}
+
+variable "instance2_name" {
+    description = "Webserver instance 2"
+    type = string
+}

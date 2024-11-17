@@ -173,7 +173,7 @@ resource "aws_instance" "Webserver01" {
     associate_public_ip_address = true
     key_name = var.key_pair
     tags = {
-        Name = "Webserver01"
+        Name = var.instance1_name
     }
 }
 
@@ -185,7 +185,7 @@ resource "aws_instance" "Webserver02" {
     associate_public_ip_address = true
     key_name = var.key_pair
     tags = {
-        Name = "Webserver02"
+        Name = var.instance2_name
     }
 }
 
