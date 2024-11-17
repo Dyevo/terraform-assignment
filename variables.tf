@@ -25,3 +25,15 @@ variable "instance2_name" {
     description = "Webserver instance 2"
     type = string
 }
+
+variable "db_username" {
+    description = "Database admin user"
+    type = string
+    sensitive = true
+}
+
+variable "db_password" {
+    description = "Database admin user password"
+    type = string
+    sensitive = true
+}

@@ -224,6 +224,8 @@ resource "aws_db_instance" "mysql" {
     engine_version = "8.0.30"
     instance_class = "db.t2.micro"
     db_name = "mydb"
+    username = var.db_username
+    password = var.db_password
     db_subnet_group_name = aws_db_subnet_group.mysql_subnet_grp.id
     vpc_security_group_ids = [aws_security_group.rds_sec_grp.id]
     skip_final_snapshot = true
